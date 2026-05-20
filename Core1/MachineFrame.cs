@@ -2,7 +2,7 @@ namespace Core1
 {
     public class MachineFrame<SymbolType>
     {
-        public int Size;
+        public readonly int Size;
         public readonly SymbolType[] StartState;
         public SymbolType[] CurrentState;
         public MachineFrame(SymbolType[] startState)
@@ -11,6 +11,5 @@ namespace Core1
             StartState = startState[..];
             CurrentState = startState[..];
         }
-
     }
 }

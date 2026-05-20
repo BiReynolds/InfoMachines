@@ -2,23 +2,23 @@ namespace Core1
 {
     public abstract class ComponentBase<SymbolType>
     {
-        public int ReadComplexity, WriteComplexity;
-        public int[] ReadSet, WriteSet;
-        public ComponentBase(int[] readSet, int[] writeSet)
+        public int Complexity;
+        public int[] ReadSet;
+        public int Target;
+        public ComponentBase(int[] readSet, int target)
         {
-            ReadComplexity = readSet.Length;
-            WriteComplexity = writeSet.Length;
+            Complexity = readSet.Length;
             ReadSet = readSet;
-            WriteSet = writeSet;
+            Target = target;
         }
 
-        public abstract SymbolType[] GetWriteValuesFromReadValues(SymbolType[] readValues);
+        public abstract SymbolType GetWriteValueFromReadValues(SymbolType[] readValues);
 
-        public void Tick(SymbolType[] state)
+        public void Tick(SymbolType[] startState, SymbolType[] destination)
         {
-            SymbolType[] readValues = GetReadValues(state);
-            SymbolType[] writeValues = GetWriteValuesFromReadValues(readValues);
-            SetWriteValues(state, writeValues);
+            SymbolType[] readValues = GetReadValues(startState);
+            SymbolType writeValue = GetWriteValueFromReadValues(readValues);
+            SetTargetValue(destination, writeValue);
         }
 
         private SymbolType[] GetReadValues(SymbolType[] state)
@@ -31,12 +31,9 @@ namespace Core1
             return readValues;
         }
 
-        public void SetWriteValues(SymbolType[] state, SymbolType[] writeValues)
+        private void SetTargetValue(SymbolType[] state, SymbolType newValue)
         {
-            for (int i = 0; i < WriteSet.Length; i++)
-            {
-                state[WriteSet[i]] = writeValues.ElementAt(i);
-            }
+            state[Target] = newValue;
         }
     }
 }
