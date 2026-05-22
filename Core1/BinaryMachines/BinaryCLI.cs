@@ -14,14 +14,14 @@ namespace Core1.BinaryMachines
             Controller = new MachineController<bool>(machine);
         }
 
-        public void Respond(string rawInput)
+        public void Respond(string rawInput, bool verbose = false)
         {
             bool[]? parsedInput = GetParsedInput(rawInput);
             if (parsedInput != null)
             {
                 Controller.SetData(parsedInput);
             }
-            Machine.Tick();
+            Machine.Tick(verbose);
             bool[] displayState = Observer.GetData();
             RenderState(displayState);
         }

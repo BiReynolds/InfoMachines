@@ -52,7 +52,6 @@ namespace Core1
             }
         }
 
-
         public void SetData(SymbolType[] input)
         {
             Machine.SetState(input, StartAddress, EndAddress);

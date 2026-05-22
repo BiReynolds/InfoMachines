@@ -25,5 +25,15 @@ namespace Core1
             }
             return true;
         }
+
+        public static string EnumerableToString<SymbolType>(IEnumerable<SymbolType> input)
+        {
+            string result = "";
+            foreach (SymbolType symbol in input)
+            {
+                result += $"{symbol} ";
+            }
+            return result;
+        }
     }
 }

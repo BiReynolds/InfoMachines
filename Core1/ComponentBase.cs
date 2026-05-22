@@ -14,10 +14,15 @@ namespace Core1
 
         public abstract SymbolType GetWriteValueFromReadValues(SymbolType[] readValues);
 
-        public void Tick(SymbolType[] startState, SymbolType[] destination)
+        public void Tick(SymbolType[] startState, SymbolType[] destination, bool verbose = false)
         {
             SymbolType[] readValues = GetReadValues(startState);
             SymbolType writeValue = GetWriteValueFromReadValues(readValues);
+            if (verbose)
+            {
+                Console.WriteLine($"Component ticked with ReadValues: {AddressHelper.EnumerableToString(startState)}");
+                Console.WriteLine($"Result was {writeValue}.  Writing to address {Target}");
+            }
             SetTargetValue(destination, writeValue);
         }
 

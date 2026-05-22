@@ -11,14 +11,19 @@ namespace Core1
             Size = Frame.Size;
         }
         
-        public void Tick()
+        public void Tick(bool verbose = false)
         {
-            SymbolType[] newState = new SymbolType[Frame.Size];
+            SymbolType[] newState = Frame.CurrentState[..];
             foreach (ComponentBase<SymbolType> component in Components)
             {
-                component.Tick(Frame.CurrentState, newState);
+                component.Tick(Frame.CurrentState, newState, verbose);
             }
-            Frame.CurrentState = newState;
+            if (verbose)
+            {
+                Console.WriteLine($"Tick start value: {AddressHelper.EnumerableToString(Frame.CurrentState)}");
+                Console.WriteLine($"Tick end value: {AddressHelper.EnumerableToString(newState)}");
+            }
+            Frame.CurrentState = newState[..];
         }
 
         public void AddComponent(ComponentBase<SymbolType> component)
